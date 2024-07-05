@@ -11,3 +11,69 @@
 // Integration here has a very specific meaning: they test **the public API** of your project.
 // You'll need to pay attention to the visibility of your types and methods; integration
 // tests can't access private or `pub(crate)` items.
+//
+//
+
+pub struct Order {
+    product_name: String,
+    quantity: u32,
+    unit_price: u32,
+}
+
+impl Order {
+    pub fn new(n: String, q: u32, p: u32) -> Order {
+        if n.is_empty() {
+            panic!("Product name cannot be empty");
+        }
+        if n.len() > 300 {
+            panic!("Product name must be less than 300 bytes");
+        }
+        if q <= 0 {
+            panic!("Quantity must be greater than 0");
+        }
+        if p <= 0 {
+            panic!("Unit price must be greater than 0");
+        }
+        Order { product_name:n, quantity:q, unit_price:p }
+    }
+
+    pub fn total(&self) -> u32 {
+        self.quantity * self.unit_price
+    }
+
+    pub fn product_name(&self) -> &str {
+        &self.product_name
+    }
+
+    pub fn quantity(&self) -> &u32 {
+        &self.quantity
+    }
+
+    pub fn unit_price(&self) -> &u32 {
+        &self.unit_price
+    }
+
+    pub fn set_product_name(&mut self, new_name : String) {
+        if new_name.is_empty() {
+            panic!("Product name cannot be empty");
+        }
+        if new_name.len() > 300 {
+            panic!("Product name must be less than 300 bytes");
+        }
+        self.product_name = new_name;
+    }
+
+    pub fn set_quantity(&mut self, new_quantity: u32) {
+        if new_quantity <= 0 {
+            panic!("Quantity must be greater than 0");
+        }
+        self.quantity = new_quantity;
+    }
+
+    pub fn set_unit_price(&mut self, new_unit_price: u32) {
+        if new_unit_price <= 0 {
+            panic!("Unit price must be greater than 0");
+        }
+        self.unit_price = new_unit_price;
+    }
+}
